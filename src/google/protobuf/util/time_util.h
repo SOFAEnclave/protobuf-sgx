@@ -36,11 +36,6 @@
 #include <ctime>
 #include <ostream>
 #include <string>
-#ifdef _MSC_VER
-#include <winsock2.h>
-#else
-#include <sys/time.h>
-#endif
 
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/timestamp.pb.h>

@@ -264,7 +264,7 @@ bool DateTimeToSeconds(const DateTime& time, int64* seconds) {
 void GetCurrentTime(int64* seconds, int32* nanos) {
   // TODO(xiaofeng): Improve the accuracy of this implementation (or just
   // remove this method from protobuf).
-  *seconds = time(nullptr);
+  *seconds = 0; // time(nullptr);  don't use time in SGX
   *nanos = 0;
 }
 

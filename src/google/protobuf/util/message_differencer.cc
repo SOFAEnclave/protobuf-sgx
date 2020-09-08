@@ -1217,7 +1217,7 @@ bool MessageDifferencer::UnpackAny(const Message& any,
     return false;
   }
 
-  if (dynamic_message_factory_ == NULL) {
+  if (!dynamic_message_factory_) {
     dynamic_message_factory_.reset(new DynamicMessageFactory());
   }
   data->reset(dynamic_message_factory_->GetPrototype(desc)->New());

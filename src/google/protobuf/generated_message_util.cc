@@ -35,9 +35,6 @@
 #include <google/protobuf/generated_message_util.h>
 
 #include <limits>
-// We're only using this as a standard way for getting the thread id.
-// We're not using any thread functionality.
-#include <thread>  // NOLINT
 #include <vector>
 
 #include <google/protobuf/io/coded_stream_inl.h>
@@ -47,7 +44,6 @@
 #include <google/protobuf/generated_message_table_driven.h>
 #include <google/protobuf/message_lite.h>
 #include <google/protobuf/metadata_lite.h>
-#include <google/protobuf/stubs/mutex.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/wire_format_lite.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -780,26 +776,9 @@ void InitSCC_DFS(SCCInfoBase* scc) {
 }  // namespace
 
 void InitSCCImpl(SCCInfoBase* scc) {
-  static WrappedMutex mu{GOOGLE_PROTOBUF_LINKER_INITIALIZED};
-  // Either the default in case no initialization is running or the id of the
-  // thread that is currently initializing.
-  static std::atomic<std::thread::id> runner;
-  auto me = std::this_thread::get_id();
-  // This will only happen because the constructor will call InitSCC while
-  // constructing the default instance.
-  if (runner.load(std::memory_order_relaxed) == me) {
-    // Because we're in the process of constructing the default instance.
-    // We can be assured that we're already exploring this SCC.
-    GOOGLE_CHECK_EQ(scc->visit_status.load(std::memory_order_relaxed),
-             SCCInfoBase::kRunning);
-    return;
-  }
+  // TODO(junxian) only support single thread, remove all lock action
   InitProtobufDefaults();
-  mu.Lock();
-  runner.store(me, std::memory_order_relaxed);
   InitSCC_DFS(scc);
-  runner.store(std::thread::id{}, std::memory_order_relaxed);
-  mu.Unlock();
 }
 
 }  // namespace internal

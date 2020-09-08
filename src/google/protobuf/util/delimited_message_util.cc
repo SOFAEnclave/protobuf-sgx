@@ -7,24 +7,6 @@ namespace google {
 namespace protobuf {
 namespace util {
 
-bool SerializeDelimitedToFileDescriptor(const MessageLite& message, int file_descriptor) {
-  io::FileOutputStream output(file_descriptor);
-  return SerializeDelimitedToZeroCopyStream(message, &output);
-}
-
-bool SerializeDelimitedToOstream(const MessageLite& message, std::ostream* output) {
-  {
-    io::OstreamOutputStream zero_copy_output(output);
-    if (!SerializeDelimitedToZeroCopyStream(message, &zero_copy_output)) return false;
-  }
-  return output->good();
-}
-
-bool ParseDelimitedFromZeroCopyStream(MessageLite* message, io::ZeroCopyInputStream* input, bool* clean_eof) {
-  google::protobuf::io::CodedInputStream coded_input(input);
-  return ParseDelimitedFromCodedStream(message, &coded_input, clean_eof);
-}
-
 bool ParseDelimitedFromCodedStream(MessageLite* message, io::CodedInputStream* input, bool* clean_eof) {
   if (clean_eof != NULL) *clean_eof = false;
   int start = input->CurrentPosition();

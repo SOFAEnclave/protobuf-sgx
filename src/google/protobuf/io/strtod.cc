@@ -59,7 +59,7 @@ string LocalizeRadix(const char* input, const char* radix_pos) {
   // to divuldge the locale's radix character.  No, localeconv() is NOT
   // thread-safe.
   char temp[16];
-  int size = sprintf(temp, "%.1f", 1.5);
+  int size = snprintf(temp, 16, "%.1f", 1.5);
   GOOGLE_CHECK_EQ(temp[0], '1');
   GOOGLE_CHECK_EQ(temp[size-1], '5');
   GOOGLE_CHECK_LE(size, 6);

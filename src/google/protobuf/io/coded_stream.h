@@ -125,7 +125,7 @@
     #pragma runtime_checks("c", off)
   #endif
 #else
-  #include <sys/param.h>   // __BYTE_ORDER
+  #include <endian.h>
   #if ((defined(__LITTLE_ENDIAN__) && !defined(__BIG_ENDIAN__)) || \
          (defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN)) && \
       !defined(PROTOBUF_DISABLE_LITTLE_ENDIAN_OPT_FOR_TEST)

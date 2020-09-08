@@ -31,7 +31,6 @@
 #include <google/protobuf/stubs/int128.h>
 
 #include <iomanip>
-#include <ostream>  // NOLINT(readability/streams)
 #include <sstream>
 
 #include <google/protobuf/stubs/logging.h>
@@ -123,69 +122,6 @@ uint128& uint128::operator%=(const uint128& divisor) {
   DivModImpl(*this, divisor, &quotient, &remainder);
   *this = remainder;
   return *this;
-}
-
-std::ostream& operator<<(std::ostream& o, const uint128& b) {
-  std::ios_base::fmtflags flags = o.flags();
-
-  // Select a divisor which is the largest power of the base < 2^64.
-  uint128 div;
-  std::streamsize div_base_log;
-  switch (flags & std::ios::basefield) {
-    case std::ios::hex:
-      div =
-          static_cast<uint64>(PROTOBUF_ULONGLONG(0x1000000000000000));  // 16^15
-      div_base_log = 15;
-      break;
-    case std::ios::oct:
-      div = static_cast<uint64>(
-          PROTOBUF_ULONGLONG(01000000000000000000000));  // 8^21
-      div_base_log = 21;
-      break;
-    default:  // std::ios::dec
-      div = static_cast<uint64>(
-          PROTOBUF_ULONGLONG(10000000000000000000));  // 10^19
-      div_base_log = 19;
-      break;
-  }
-
-  // Now piece together the uint128 representation from three chunks of
-  // the original value, each less than "div" and therefore representable
-  // as a uint64.
-  std::ostringstream os;
-  std::ios_base::fmtflags copy_mask =
-      std::ios::basefield | std::ios::showbase | std::ios::uppercase;
-  os.setf(flags & copy_mask, copy_mask);
-  uint128 high = b;
-  uint128 low;
-  uint128::DivModImpl(high, div, &high, &low);
-  uint128 mid;
-  uint128::DivModImpl(high, div, &high, &mid);
-  if (high.lo_ != 0) {
-    os << high.lo_;
-    os << std::noshowbase << std::setfill('0') << std::setw(div_base_log);
-    os << mid.lo_;
-    os << std::setw(div_base_log);
-  } else if (mid.lo_ != 0) {
-    os << mid.lo_;
-    os << std::noshowbase << std::setfill('0') << std::setw(div_base_log);
-  }
-  os << low.lo_;
-  std::string rep = os.str();
-
-  // Add the requisite padding.
-  std::streamsize width = o.width(0);
-  if (width > rep.size()) {
-    if ((flags & std::ios::adjustfield) == std::ios::left) {
-      rep.append(width - rep.size(), o.fill());
-    } else {
-      rep.insert(static_cast<std::string::size_type>(0),
-                 width - rep.size(), o.fill());
-    }
-  }
-
-  // Stream the final representation in a single "<<" call.
-  return o << rep;
 }
 
 }  // namespace protobuf

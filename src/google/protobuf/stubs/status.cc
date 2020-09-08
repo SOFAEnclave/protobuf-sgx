@@ -29,7 +29,6 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <google/protobuf/stubs/status.h>
 
-#include <ostream>
 #include <stdio.h>
 #include <string>
 #include <utility>
@@ -122,11 +121,6 @@ string Status::ToString() const {
           error_message_;
     }
   }
-}
-
-std::ostream& operator<<(std::ostream& os, const Status& x) {
-  os << x.ToString();
-  return os;
 }
 
 }  // namespace util

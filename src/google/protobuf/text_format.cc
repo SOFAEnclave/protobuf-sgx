@@ -63,6 +63,7 @@
 #include <google/protobuf/stubs/map_util.h>
 #include <google/protobuf/stubs/stl_util.h>
 
+extern "C" int printf(const char* fmt, ...);
 
 namespace google {
 namespace protobuf {

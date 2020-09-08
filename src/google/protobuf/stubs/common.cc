@@ -35,7 +35,7 @@
 #include <atomic>
 #include <errno.h>
 #include <sstream>
-#include <stdio.h>
+#include <cstdio>
 #include <vector>
 
 #ifdef _WIN32
@@ -44,8 +44,6 @@
 #define snprintf _snprintf    // see comment in strutil.cc
 #elif defined(HAVE_PTHREAD)
 #include <pthread.h>
-#else
-#error "No suitable threading library available."
 #endif
 #if defined(__ANDROID__)
 #include <android/log.h>
@@ -160,6 +158,7 @@ inline void DefaultLogHandler(LogLevel level, const char* filename, int line,
 }
 
 #else
+extern "C" int printf(const char* fmt, ...);
 void DefaultLogHandler(LogLevel level, const char* filename, int line,
                        const string& message) {
   if (level < GOOGLE_PROTOBUF_MIN_LOG_LEVEL) {
@@ -169,9 +168,8 @@ void DefaultLogHandler(LogLevel level, const char* filename, int line,
 
   // We use fprintf() instead of cerr because we want this to work at static
   // initialization time.
-  fprintf(stderr, "[libprotobuf %s %s:%d] %s\n",
-          level_names[level], filename, line, message.c_str());
-  fflush(stderr);  // Needed on MSVC.
+  printf("[libprotobuf %s %s:%d] %s\n", level_names[level], filename, line,
+         message.c_str());
 }
 #endif
 
@@ -205,9 +203,7 @@ LogMessage& LogMessage::operator<<(
 }
 
 LogMessage& LogMessage::operator<<(const uint128& value) {
-  std::ostringstream str;
-  str << value;
-  message_ += str.str();
+  message_ += std::to_string((const long long &)value);
   return *this;
 }
 

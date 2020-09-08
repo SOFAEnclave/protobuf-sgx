@@ -63,10 +63,7 @@
     #pragma runtime_checks("c", off)
   #endif
 #else
-  #include <sys/param.h>   // __BYTE_ORDER
-  #if defined(__OpenBSD__)
-    #include <endian.h>
-  #endif
+  #include <endian.h>
   #if ((defined(__LITTLE_ENDIAN__) && !defined(__BIG_ENDIAN__)) || \
          (defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN) || \
          (defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN)) && \

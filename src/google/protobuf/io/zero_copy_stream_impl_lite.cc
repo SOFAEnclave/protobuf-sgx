@@ -384,7 +384,7 @@ bool CopyingOutputStreamAdaptor::WriteBuffer() {
 }
 
 void CopyingOutputStreamAdaptor::AllocateBufferIfNeeded() {
-  if (buffer_ == NULL) {
+  if (!buffer_) {
     buffer_.reset(new uint8[buffer_size_]);
   }
 }

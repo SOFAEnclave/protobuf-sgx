@@ -194,6 +194,9 @@ struct PROTOBUF_EXPORT ArenaStringPtr {
 
     this_ptr->swap(*other_ptr);
 #else
+#define UNUSED(expr) do { (void)(expr); } while (0)
+    UNUSED(default_value);
+    UNUSED(arena);
     std::swap(ptr_, other->ptr_);
 #endif
   }

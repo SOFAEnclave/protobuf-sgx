@@ -33,16 +33,11 @@
 #include <algorithm>
 #include <climits>
 #include <string>
-#include <ostream>
 
 #include <google/protobuf/stubs/logging.h>
 
 namespace google {
 namespace protobuf {
-std::ostream& operator<<(std::ostream& o, StringPiece piece) {
-  o.write(piece.data(), piece.size());
-  return o;
-}
 
 // Out-of-line error path.
 void StringPiece::LogFatalSizeTooBig(size_t size, const char* details) {

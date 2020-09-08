@@ -428,9 +428,6 @@ inline bool operator>=(StringPiece x, StringPiece y) {
   return !(x < y);
 }
 
-// allow StringPiece to be logged
-extern std::ostream& operator<<(std::ostream& o, StringPiece piece);
-
 namespace internal {
 // StringPiece is not a POD and can not be used in an union (pre C++11). We
 // need a POD version of it.
@@ -481,7 +478,7 @@ GOOGLE_PROTOBUF_HASH_NAMESPACE_DECLARATION_START
 template<> struct hash<StringPiece> {
   size_t operator()(const StringPiece& s) const {
     size_t result = 0;
-    for (const char *str = s.data(), *end = str + s.size(); str < end; str++) {  
+    for (const char *str = s.data(), *end = str + s.size(); str < end; str++) {
       result = 5 * result + static_cast<size_t>(*str);
     }
     return result;
