@@ -85,7 +85,7 @@
 #elif defined(__APPLE__)
 #include <libkern/OSByteOrder.h>
 #elif defined(__linux__) || defined(__ANDROID__) || defined(__CYGWIN__)
-#include <byteswap.h>  // IWYU pragma: export
+#include <google/protobuf/stubs/byteswap.h>
 #endif
 
 // Legacy: some users reference these (internal-only) macros even though we

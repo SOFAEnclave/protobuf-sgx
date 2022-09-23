@@ -6756,12 +6756,14 @@ void DescriptorBuilder::SuggestFieldNumbers(FileDescriptor* file,
                 return std::tie(lhs.from, lhs.to) < std::tie(rhs.from, rhs.to);
               });
     int current_ordinal = 1;
-    std::stringstream id_list;
-    id_list << "Suggested field numbers for " << message->full_name() << ": ";
+    std::string id_list = "Suggested field numbers for ";
+    id_list.append(message->full_name());
+    id_list.append(": ");
     const char* separator = "";
     for (auto& current_range : used_ordinals) {
       while (current_ordinal < current_range.from && fields_to_suggest > 0) {
-        id_list << separator << current_ordinal++;
+        id_list.append(separator);
+        id_list.append(std::to_string(current_ordinal++));
         separator = ", ";
         fields_to_suggest--;
       }
@@ -6770,7 +6772,7 @@ void DescriptorBuilder::SuggestFieldNumbers(FileDescriptor* file,
     }
     if (hints->first_reason) {
       AddError(message->full_name(), *hints->first_reason,
-               hints->first_reason_location, id_list.str());
+               hints->first_reason_location, id_list);
     }
   }
 }

@@ -35,7 +35,7 @@
 #include <atomic>
 #include <errno.h>
 #include <sstream>
-#include <stdio.h>
+#include <cstdio>
 #include <vector>
 
 #ifdef _WIN32
@@ -157,6 +157,7 @@ inline void DefaultLogHandler(LogLevel level, const char* filename, int line,
 }
 
 #else
+extern "C" int printf(const char* fmt, ...);
 void DefaultLogHandler(LogLevel level, const char* filename, int line,
                        const std::string& message) {
   if (level < GOOGLE_PROTOBUF_MIN_LOG_LEVEL) {
@@ -166,9 +167,8 @@ void DefaultLogHandler(LogLevel level, const char* filename, int line,
 
   // We use fprintf() instead of cerr because we want this to work at static
   // initialization time.
-  fprintf(stderr, "[libprotobuf %s %s:%d] %s\n",
-          level_names[level], filename, line, message.c_str());
-  fflush(stderr);  // Needed on MSVC.
+  printf("[libprotobuf %s %s:%d] %s\n",
+         level_names[level], filename, line, message.c_str());
 }
 #endif
 

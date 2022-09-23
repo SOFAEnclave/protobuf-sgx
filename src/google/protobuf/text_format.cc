@@ -66,6 +66,8 @@
 // Must be included last.
 #include <google/protobuf/port_def.inc>
 
+extern "C" int printf(const char* fmt, ...);
+
 namespace google {
 namespace protobuf {
 

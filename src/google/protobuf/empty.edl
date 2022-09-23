@@ -1,0 +1,8 @@
+enclave {
+    trusted {
+        public void ecall_protobuf_cpp_dummy();
+    };
+
+    untrusted {
+    };
+};

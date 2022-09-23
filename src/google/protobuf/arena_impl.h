@@ -59,6 +59,7 @@ namespace internal {
 #ifdef __cpp_aligned_new
 enum { kCacheAlignment = 64 };
 #else
+typedef long double max_align_t;
 enum { kCacheAlignment = alignof(max_align_t) };  // do the best we can
 #endif
 

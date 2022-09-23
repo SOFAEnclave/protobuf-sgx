@@ -138,7 +138,7 @@ int64_t ArrayOutputStream::ByteCount() const { return position_; }
 StringOutputStream::StringOutputStream(std::string* target) : target_(target) {}
 
 bool StringOutputStream::Next(void** data, int* size) {
-  GOOGLE_CHECK(target_ != NULL);
+  GOOGLE_CHECK(target_ != nullptr);
   size_t old_size = target_->size();
 
   // Grow the string.
@@ -166,13 +166,13 @@ bool StringOutputStream::Next(void** data, int* size) {
 
 void StringOutputStream::BackUp(int count) {
   GOOGLE_CHECK_GE(count, 0);
-  GOOGLE_CHECK(target_ != NULL);
+  GOOGLE_CHECK(target_ != nullptr);
   GOOGLE_CHECK_LE(static_cast<size_t>(count), target_->size());
   target_->resize(target_->size() - count);
 }
 
 int64_t StringOutputStream::ByteCount() const {
-  GOOGLE_CHECK(target_ != NULL);
+  GOOGLE_CHECK(target_ != nullptr);
   return target_->size();
 }
 
@@ -244,7 +244,7 @@ bool CopyingInputStreamAdaptor::Next(const void** data, int* size) {
 }
 
 void CopyingInputStreamAdaptor::BackUp(int count) {
-  GOOGLE_CHECK(backup_bytes_ == 0 && buffer_.get() != NULL)
+  GOOGLE_CHECK(backup_bytes_ == 0 && buffer_.get() != nullptr)
       << " BackUp() can only be called after Next().";
   GOOGLE_CHECK_LE(count, buffer_used_)
       << " Can't back up over more bytes than were returned by the last call"
@@ -282,7 +282,7 @@ int64_t CopyingInputStreamAdaptor::ByteCount() const {
 }
 
 void CopyingInputStreamAdaptor::AllocateBufferIfNeeded() {
-  if (buffer_.get() == NULL) {
+  if (buffer_.get() == nullptr) {
     buffer_.reset(new uint8_t[buffer_size_]);
   }
 }
@@ -396,7 +396,7 @@ bool CopyingOutputStreamAdaptor::WriteBuffer() {
 }
 
 void CopyingOutputStreamAdaptor::AllocateBufferIfNeeded() {
-  if (buffer_ == NULL) {
+  if (buffer_ == nullptr) {
     buffer_.reset(new uint8_t[buffer_size_]);
   }
 }

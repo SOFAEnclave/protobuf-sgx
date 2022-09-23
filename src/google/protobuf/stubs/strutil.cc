@@ -36,6 +36,7 @@
 #include <float.h>    // FLT_DIG and DBL_DIG
 #include <limits.h>
 #include <stdio.h>
+#include <cstring>
 #include <cmath>
 #include <iterator>
 #include <limits>
@@ -503,8 +504,9 @@ int CEscapeInternal(const char* src, int src_len, char* dest,
              (last_hex_escape && isxdigit(*src)))) {
           if (dest_len - used < 4) // need space for 4 letter escape
             return -1;
-          sprintf(dest + used, (use_hex ? "\\x%02x" : "\\%03o"),
-                  static_cast<uint8_t>(*src));
+          snprintf(dest + used, dest_len - used,
+                   (use_hex ? "\\x%02x" : "\\%03o"),
+                   static_cast<uint8_t>(*src));
           is_hex_escape = use_hex;
           used += 4;
         } else {
@@ -1247,13 +1249,13 @@ char* DoubleToBuffer(double value, char* buffer) {
   static_assert(DBL_DIG < 20, "DBL_DIG_is_too_big");
 
   if (value == std::numeric_limits<double>::infinity()) {
-    strcpy(buffer, "inf");
+    strncpy(buffer, "inf", strlen("inf"));
     return buffer;
   } else if (value == -std::numeric_limits<double>::infinity()) {
-    strcpy(buffer, "-inf");
+    strncpy(buffer, "-inf", strlen("-inf"));
     return buffer;
   } else if (std::isnan(value)) {
-    strcpy(buffer, "nan");
+    strncpy(buffer, "nan", strlen("nan"));
     return buffer;
   }
 
@@ -1365,13 +1367,13 @@ char* FloatToBuffer(float value, char* buffer) {
   static_assert(FLT_DIG < 10, "FLT_DIG_is_too_big");
 
   if (value == std::numeric_limits<double>::infinity()) {
-    strcpy(buffer, "inf");
+    strncpy(buffer, "inf", strlen("inf"));
     return buffer;
   } else if (value == -std::numeric_limits<double>::infinity()) {
-    strcpy(buffer, "-inf");
+    strncpy(buffer, "-inf", strlen("-inf"));
     return buffer;
   } else if (std::isnan(value)) {
-    strcpy(buffer, "nan");
+    strncpy(buffer, "nan", strlen("nan"));
     return buffer;
   }
 

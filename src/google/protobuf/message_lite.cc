@@ -265,26 +265,6 @@ bool MessageLite::ParsePartialFromZeroCopyStream(
   return ParseFrom<kParsePartial>(input);
 }
 
-bool MessageLite::ParseFromFileDescriptor(int file_descriptor) {
-  io::FileInputStream input(file_descriptor);
-  return ParseFromZeroCopyStream(&input) && input.GetErrno() == 0;
-}
-
-bool MessageLite::ParsePartialFromFileDescriptor(int file_descriptor) {
-  io::FileInputStream input(file_descriptor);
-  return ParsePartialFromZeroCopyStream(&input) && input.GetErrno() == 0;
-}
-
-bool MessageLite::ParseFromIstream(std::istream* input) {
-  io::IstreamInputStream zero_copy_input(input);
-  return ParseFromZeroCopyStream(&zero_copy_input) && input->eof();
-}
-
-bool MessageLite::ParsePartialFromIstream(std::istream* input) {
-  io::IstreamInputStream zero_copy_input(input);
-  return ParsePartialFromZeroCopyStream(&zero_copy_input) && input->eof();
-}
-
 bool MessageLite::MergePartialFromBoundedZeroCopyStream(
     io::ZeroCopyInputStream* input, int size) {
   return ParseFrom<kMergePartial>(internal::BoundedZCIS{input, size});
@@ -412,29 +392,6 @@ bool MessageLite::SerializePartialToZeroCopyStream(
   stream.Trim(target);
   if (stream.HadError()) return false;
   return true;
-}
-
-bool MessageLite::SerializeToFileDescriptor(int file_descriptor) const {
-  io::FileOutputStream output(file_descriptor);
-  return SerializeToZeroCopyStream(&output) && output.Flush();
-}
-
-bool MessageLite::SerializePartialToFileDescriptor(int file_descriptor) const {
-  io::FileOutputStream output(file_descriptor);
-  return SerializePartialToZeroCopyStream(&output) && output.Flush();
-}
-
-bool MessageLite::SerializeToOstream(std::ostream* output) const {
-  {
-    io::OstreamOutputStream zero_copy_output(output);
-    if (!SerializeToZeroCopyStream(&zero_copy_output)) return false;
-  }
-  return output->good();
-}
-
-bool MessageLite::SerializePartialToOstream(std::ostream* output) const {
-  io::OstreamOutputStream zero_copy_output(output);
-  return SerializePartialToZeroCopyStream(&zero_copy_output);
 }
 
 bool MessageLite::AppendToString(std::string* output) const {

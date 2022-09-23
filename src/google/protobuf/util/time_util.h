@@ -37,18 +37,6 @@
 #include <ctime>
 #include <ostream>
 #include <string>
-#ifdef _MSC_VER
-#ifdef _XBOX_ONE
-struct timeval {
-  int64_t tv_sec;  /* seconds */
-  int64_t tv_usec; /* and microseconds */
-};
-#else
-#include <winsock2.h>
-#endif  // _XBOX_ONE
-#else
-#include <sys/time.h>
-#endif
 
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/timestamp.pb.h>
