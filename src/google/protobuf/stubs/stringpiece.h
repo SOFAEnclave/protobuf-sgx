@@ -375,9 +375,6 @@ inline bool operator>=(StringPiece x, StringPiece y) {
   return !(x < y);
 }
 
-// allow StringPiece to be logged
-extern std::ostream& operator<<(std::ostream& o, StringPiece piece);
-
 }  // namespace stringpiece_internal
 
 using ::google::protobuf::stringpiece_internal::StringPiece;

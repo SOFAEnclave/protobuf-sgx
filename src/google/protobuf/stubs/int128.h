@@ -85,10 +85,6 @@ class PROTOBUF_EXPORT uint128 {
   friend uint64_t Uint128Low64(const uint128& v);
   friend uint64_t Uint128High64(const uint128& v);
 
-  // We add "std::" to avoid including all of port.h.
-  PROTOBUF_EXPORT friend std::ostream& operator<<(std::ostream& o,
-                                                  const uint128& b);
-
  private:
   static void DivModImpl(uint128 dividend, uint128 divisor,
                          uint128* quotient_ret, uint128* remainder_ret);
@@ -119,10 +115,6 @@ struct uint128_pod {
 };
 
 PROTOBUF_EXPORT extern const uint128_pod kuint128max;
-
-// allow uint128 to be logged
-PROTOBUF_EXPORT extern std::ostream& operator<<(std::ostream& o,
-                                                const uint128& b);
 
 // Methods to access low and high pieces of 128-bit value.
 // Defined externally from uint128 to facilitate conversion

@@ -121,7 +121,7 @@ class GOOGLE_PROTOBUF_CAPABILITY("mutex") PROTOBUF_EXPORT WrappedMutex {
 #if defined(__QNX__)
   constexpr WrappedMutex() = default;
 #else
-  constexpr WrappedMutex() {}
+  // constexpr WrappedMutex() {}
 #endif
   void Lock() GOOGLE_PROTOBUF_ACQUIRE() { mu_.lock(); }
   void Unlock() GOOGLE_PROTOBUF_RELEASE() { mu_.unlock(); }

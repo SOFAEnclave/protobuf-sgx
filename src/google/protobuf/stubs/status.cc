@@ -123,11 +123,6 @@ std::string Status::ToString() const {
 
 Status OkStatus() { return Status(); }
 
-std::ostream& operator<<(std::ostream& os, const Status& x) {
-  os << x.ToString();
-  return os;
-}
-
 bool IsAborted(const Status& status) {
   return status.code() == StatusCode::kAborted;
 }

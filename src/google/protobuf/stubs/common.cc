@@ -200,13 +200,6 @@ LogMessage& LogMessage::operator<<(const util::Status& status) {
   return *this;
 }
 
-LogMessage& LogMessage::operator<<(const uint128& value) {
-  std::ostringstream str;
-  str << value;
-  message_ += str.str();
-  return *this;
-}
-
 LogMessage& LogMessage::operator<<(char value) {
   return *this << StringPiece(&value, 1);
 }

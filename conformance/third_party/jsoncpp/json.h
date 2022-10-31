@@ -1715,7 +1715,7 @@ public:
       \return zero on success (For now, we always return zero, so check the stream instead.)
       \throw std::exception possibly, depending on configuration
    */
-  virtual int write(Value const& root, std::ostream* sout) = 0;
+  virtual int write(Value const& root, * sout) = 0;
 
   /** \brief A simple abstract factory.
    */

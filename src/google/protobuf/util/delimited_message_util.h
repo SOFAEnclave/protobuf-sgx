@@ -67,9 +67,6 @@ namespace util {
 bool PROTOBUF_EXPORT SerializeDelimitedToFileDescriptor(
     const MessageLite& message, int file_descriptor);
 
-bool PROTOBUF_EXPORT SerializeDelimitedToOstream(const MessageLite& message,
-                                                 std::ostream* output);
-
 // Read a single size-delimited message from the given stream. Delimited
 // format allows a single file or stream to contain multiple messages,
 // whereas normally parsing consumes the entire input. A delimited message

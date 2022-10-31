@@ -44,16 +44,6 @@ bool SerializeDelimitedToFileDescriptor(const MessageLite& message,
   return SerializeDelimitedToZeroCopyStream(message, &output);
 }
 
-bool SerializeDelimitedToOstream(const MessageLite& message,
-                                 std::ostream* output) {
-  {
-    io::OstreamOutputStream zero_copy_output(output);
-    if (!SerializeDelimitedToZeroCopyStream(message, &zero_copy_output))
-      return false;
-  }
-  return output->good();
-}
-
 bool ParseDelimitedFromZeroCopyStream(MessageLite* message,
                                       io::ZeroCopyInputStream* input,
                                       bool* clean_eof) {

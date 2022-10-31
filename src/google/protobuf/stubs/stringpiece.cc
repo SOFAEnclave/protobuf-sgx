@@ -41,11 +41,6 @@ namespace google {
 namespace protobuf {
 namespace stringpiece_internal {
 
-std::ostream& operator<<(std::ostream& o, StringPiece piece) {
-  o.write(piece.data(), piece.size());
-  return o;
-}
-
 void StringPiece::LogFatalSizeTooBig(size_t size, const char* details) {
   GOOGLE_LOG(FATAL) << "size too big: " << size << " details: " << details;
 }

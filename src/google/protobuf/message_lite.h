@@ -251,13 +251,6 @@ class PROTOBUF_EXPORT MessageLite {
   // required fields.
   PROTOBUF_ATTRIBUTE_REINITIALIZES bool ParsePartialFromFileDescriptor(
       int file_descriptor);
-  // Parse a protocol buffer from a C++ istream.  If successful, the entire
-  // input will be consumed.
-  PROTOBUF_ATTRIBUTE_REINITIALIZES bool ParseFromIstream(std::istream* input);
-  // Like ParseFromIstream(), but accepts messages that are missing
-  // required fields.
-  PROTOBUF_ATTRIBUTE_REINITIALIZES bool ParsePartialFromIstream(
-      std::istream* input);
   // Read a protocol buffer from the given zero-copy input stream, expecting
   // the message to be exactly "size" bytes long.  If successful, exactly
   // this many bytes will have been consumed from the input.
@@ -356,11 +349,6 @@ class PROTOBUF_EXPORT MessageLite {
   bool SerializeToFileDescriptor(int file_descriptor) const;
   // Like SerializeToFileDescriptor(), but allows missing required fields.
   bool SerializePartialToFileDescriptor(int file_descriptor) const;
-  // Serialize the message and write it to the given C++ ostream.  All
-  // required fields must be set.
-  bool SerializeToOstream(std::ostream* output) const;
-  // Like SerializeToOstream(), but allows missing required fields.
-  bool SerializePartialToOstream(std::ostream* output) const;
 
   // Like SerializeToString(), but appends to the data to the string's
   // existing contents.  All required fields must be set.
