@@ -12,3 +12,4 @@ and other applications based on trusted-function-framework.
 | Branch Name  | Probutobuf Version                                                                                                          |
 | ------------ | -------------------                                                                                                         |
 | v3.7.1       | [protobuf-cpp-3.7.1.tar.gz](https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-cpp-3.7.1.tar.gz) |
+| v3.21.6      | [protobuf-cpp-3.21.6.tar.gz](https://github.com/protocolbuffers/protobuf/releases/download/v21.6/protobuf-all-21.6.tar.gz)  |
